@@ -1,6 +1,13 @@
+import sys
+from stats import get_word_count, get_character_count
+
 def main():
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
     try:
-        file_path = "./books/frankenstein.txt"
+        file_path = sys.argv[1]
         text = read_file(file_path)
         generate_report(file_path, text)
     except FileNotFoundError:
@@ -13,21 +20,6 @@ def read_file(file_path):
     """Read and return the contents of a file."""
     with open(file_path, 'r', encoding='utf-8') as file:
         return file.read()
-
-
-def get_word_count(text):
-    """Count words in text, handling multiple spaces and line breaks."""
-    words = text.split()
-    return len(words)
-
-
-def get_character_count(text):
-    """Count occurrences of alphabetic characters in text."""
-    char_count = { }
-    for char in text.lower():
-        if char.isalpha():
-            char_count[char] = char_count.get(char, 0) + 1
-    return dict(sorted(char_count.items()))  # Sort alphabetically
 
 
 def print_report_header(file_path):
